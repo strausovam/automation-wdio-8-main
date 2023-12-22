@@ -1,4 +1,4 @@
-//ukol 9.lekce
+//Finalni pageobject
 
 class AppHWPage {
 

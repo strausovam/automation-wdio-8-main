@@ -1,7 +1,8 @@
-// Finalni reseni ukolu
+// Finalni reseni ukolu, spusteni ukolu npm run wdio -- --suite homework
 
+import Helper from '../helper.js';
 import RegistrationPage from '../pageobjectsHW/homework.page.js'
-import {fullName, email, password, passwordC} from '../fixturesHW.js'
+import {fullName, password} from '../fixturesHW.js'
 
 describe('Registration Page', async () => {
 
@@ -23,12 +24,14 @@ describe('Registration Page', async () => {
     });
 
      it('valid registration', async () => {
-        await RegistrationPage.register(fullName, email, password, passwordC);
+        const randomEmail = await Helper.getRandomEmail();
+        console.log(randomEmail);
+        await RegistrationPage.register(fullName, randomEmail, password);
         await expect(await RegistrationPage.getCurrentUser()).toEqual(fullName);
     });  
 
     it('invalid registration - existing email', async () => {
-        await RegistrationPage.register('Milan Konecny', 'm.konecny@gmail.com', 'Heslo123', 'Heslo123');
+        await RegistrationPage.register('Milan Konecny', 'm.konecny@gmail.com', 'Heslo123');
         await expect(await RegistrationPage.getToastMessage()).toEqual('Některé pole obsahuje špatně zadanou hodnotu');
         await expect(await RegistrationPage.getFieldError()).toEqual('Účet s tímto emailem již existuje')
     
